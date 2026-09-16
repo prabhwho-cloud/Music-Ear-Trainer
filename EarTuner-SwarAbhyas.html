@@ -3,27 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swar Abhyas - Ear Trainer</title>
+    <title>Swar Abhyas - Indian Classical Ear Trainer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            touch-action: manipulation;
+        }
+        .swara-btn {
+            transition: all 0.15s ease-in-out;
+        }
+        .swara-btn:active {
+            transform: scale(0.96);
+        }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between p-4 font-sans">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between p-4 sm:p-6 select-none">
 
     <!-- Header -->
-    <header class="text-center my-4">
-        <h1 class="text-3xl font-bold tracking-wide text-amber-400">Ear Trainer -Swar Abhyas</h1>
-        <p class="text-sm text-slate-400 mt-1">Music Ear Trainer</p>
+    <header class="text-center my-2 sm:my-4">
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-amber-400 drop-shadow-md">Swar Abhyas</h1>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1">Ear Training for Indian Classical Music</p>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-md mx-auto w-full space-y-6">
+    <main class="max-w-md mx-auto w-full space-y-5">
 
-        <!-- Settings Card -->
-        <div class="bg-slate-800 rounded-xl p-5 border border-slate-700 space-y-4 shadow-lg">
+        <!-- Settings Controls Card -->
+        <div class="bg-slate-800/90 rounded-2xl p-5 border border-slate-700/80 space-y-4 shadow-xl backdrop-blur">
             
-            <!-- Base Pitch -->
+            <!-- Base Pitch / Scale Selector -->
             <div>
-                <label for="scaleSelect" class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Base Pitch (Sa)</label>
-                <select id="scaleSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                <label for="scaleSelect" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Base Pitch (Sa)
+                </label>
+                <select id="scaleSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-amber-400 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
                     <option value="196.00">G (196.00 Hz)</option>
                     <option value="207.65">G# (207.65 Hz)</option>
                     <option value="220.00">A (220.00 Hz)</option>
@@ -41,24 +56,26 @@
 
             <!-- Practice Mode Toggle -->
             <div>
-                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Practice Mode</label>
-                <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1.5 rounded-lg border border-slate-700">
-                    <label class="flex items-center justify-center p-2 rounded-md cursor-pointer text-sm font-medium transition-colors" id="modeShudhLabel">
-                        <input type="radio" name="practiceMode" value="shudh" checked class="hidden" id="modeShudh">
-                        <span>Shudh Only</span>
-                    </label>
-                    <label class="flex items-center justify-center p-2 rounded-md cursor-pointer text-sm font-medium transition-colors" id="modeMixedLabel">
-                        <input type="radio" name="practiceMode" value="mixed" class="hidden" id="modeMixed">
-                        <span>Mixed Notes</span>
-                    </label>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Practice Mode
+                </label>
+                <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-700/80">
+                    <button id="modeShudhBtn" class="py-2.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-md">
+                        Shudh Only (8 Notes)
+                    </button>
+                    <button id="modeMixedBtn" class="py-2.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-200">
+                        Mixed Notes (13 Notes)
+                    </button>
                 </div>
             </div>
 
-            <!-- Sound Instrument -->
+            <!-- Sound Instrument Selector -->
             <div>
-                <label for="soundSelect" class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Sound Instrument</label>
-                <select id="soundSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                    <option value="harmonium">Harmonium (Reeds)</option>
+                <label for="soundSelect" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Sound Instrument
+                </label>
+                <select id="soundSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-amber-400 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                    <option value="harmonium" selected>Harmonium (Reeds)</option>
                     <option value="bansuri">Bansuri (Flute)</option>
                     <option value="piano">Piano (Keyboard)</option>
                 </select>
@@ -66,40 +83,55 @@
 
         </div>
 
-        <!-- Action Buttons -->
-        <div class="flex gap-3">
-            <button id="playSaBtn" class="flex-1 bg-slate-700 hover:bg-slate-600 active:bg-slate-800 text-slate-200 font-semibold py-3 px-4 rounded-xl border border-slate-600 transition shadow">
-                Play Base Sa
+        <!-- Gameplay Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <button id="playSaBtn" class="bg-slate-800 hover:bg-slate-700 active:bg-slate-800 text-slate-200 font-semibold py-3 px-3 rounded-xl border border-slate-700 transition shadow flex items-center justify-center gap-1.5 text-xs sm:text-sm">
+                <span>🎵</span> Play Base Sa
             </button>
-            <button id="playRandomBtn" class="flex-1 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-slate-950 font-bold py-3 px-4 rounded-xl transition shadow">
-                Play Random Note
+            <button id="playRandomBtn" class="bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-slate-950 font-bold py-3 px-3 rounded-xl transition shadow-lg text-xs sm:text-sm flex items-center justify-center gap-1.5">
+                <span>❓</span> Play Random Note
             </button>
-            <button id="repeatBtn" disabled class="bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 p-3 rounded-xl border border-slate-700 transition">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            <button id="repeatBtn" disabled class="bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 font-semibold py-3 px-3 rounded-xl border border-slate-700 transition shadow flex items-center justify-center gap-1.5 text-xs sm:text-sm">
+                <span>🔁</span> Play Note Again
             </button>
         </div>
 
-        <!-- Status & Score Banner -->
-        <div class="bg-slate-800/60 rounded-xl p-4 border border-slate-700/60 text-center">
-            <div id="statusMessage" class="text-slate-300 text-sm font-medium min-h-[20px]">
-                Select your settings and press "Play Random Note"
+        <!-- Status Box & Score Banner -->
+        <div class="bg-slate-800/60 rounded-2xl p-4 border border-slate-700/60 text-center shadow-inner">
+            <div id="statusMessage" class="text-slate-300 text-xs sm:text-sm font-medium min-h-[24px] flex items-center justify-center">
+                Press "Play Base Sa" to anchor your scale, or "Play Random Note" to start!
             </div>
-            <div class="flex justify-center items-center gap-6 mt-3 text-xs text-slate-400 font-mono border-t border-slate-700/50 pt-2">
-                <div>Score: <span id="scoreVal" class="text-amber-400 font-bold text-sm">0/0</span></div>
-                <div>Streak: <span id="streakVal" class="text-amber-400 font-bold text-sm">0</span></div>
+            
+            <div class="flex justify-around items-center mt-3 pt-3 border-t border-slate-700/60 text-xs font-mono">
+                <div class="flex items-center gap-1.5">
+                    <span class="text-slate-400 uppercase tracking-wider text-[10px]">Score:</span>
+                    <span id="scoreVal" class="text-amber-400 font-bold text-sm">0 / 0</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-slate-400 uppercase tracking-wider text-[10px]">Accuracy:</span>
+                    <span id="accuracyVal" class="text-amber-400 font-bold text-sm">0%</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-slate-400 uppercase tracking-wider text-[10px]">Streak:</span>
+                    <span id="streakVal" class="text-amber-400 font-bold text-sm">0 🔥</span>
+                </div>
             </div>
         </div>
 
         <!-- Interactive Swara Grid -->
-        <div id="swaraGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+        <div id="swaraGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <!-- Dynamically populated by JS -->
+        </div>
 
     </main>
 
-    <footer class="text-center text-xs text-slate-500 my-4">
-        Swar Abhyas • Mobile-ready Ear Training Tool
+    <!-- Footer -->
+    <footer class="text-center text-[11px] text-slate-500 my-4">
+        Swar Abhyas • Master Indian Classical Ear Training
     </footer>
 
     <script>
+        // Comprehensive 13-Swara Dataset
         const SWARAS = [
             { id: "S",  name: "Sa",  type: "Shudh", semitones: 0,  isShudh: true },
             { id: "r",  name: "re",  type: "Komal", semitones: 1,  isShudh: false },
@@ -116,25 +148,26 @@
             { id: "S2", name: "Sa'", type: "Shudh", semitones: 12, isShudh: true }
         ];
 
+        // State Tracking Variables
         let audioCtx = null;
-        let activeNodes = []; // Tracks currently active sound sources for monophonic playback
+        let activeNodes = []; // Tracks currently active sound sources for monophonic audio
         let activeTarget = null;
         let scoreCount = 0;
         let totalAttempts = 0;
         let streakCount = 0;
-        let currentMode = 'shudh';
+        let currentMode = 'shudh'; // 'shudh' or 'mixed'
 
+        // DOM Element Cache
         const scaleSelect = document.getElementById('scaleSelect');
         const soundSelect = document.getElementById('soundSelect');
-        const modeShudhInput = document.getElementById('modeShudh');
-        const modeMixedInput = document.getElementById('modeMixed');
-        const modeShudhLabel = document.getElementById('modeShudhLabel');
-        const modeMixedLabel = document.getElementById('modeMixedLabel');
+        const modeShudhBtn = document.getElementById('modeShudhBtn');
+        const modeMixedBtn = document.getElementById('modeMixedBtn');
         const playSaBtn = document.getElementById('playSaBtn');
         const playRandomBtn = document.getElementById('playRandomBtn');
         const repeatBtn = document.getElementById('repeatBtn');
         const statusMessage = document.getElementById('statusMessage');
         const scoreVal = document.getElementById('scoreVal');
+        const accuracyVal = document.getElementById('accuracyVal');
         const streakVal = document.getElementById('streakVal');
         const swaraGrid = document.getElementById('swaraGrid');
 
@@ -148,7 +181,7 @@
             return audioCtx;
         }
 
-        // Instantly stops any previously playing sound nodes
+        // Instantly stops any previously playing sound nodes to prevent sound overlap
         function stopActiveAudio() {
             activeNodes.forEach(node => {
                 try {
@@ -159,8 +192,15 @@
             activeNodes = [];
         }
 
+        /**
+         * Synthesizes audio tones for a sustained duration (3.0 seconds)
+         * @param {number} freq - Pitch frequency in Hz
+         * @param {string} instrument - 'harmonium', 'bansuri', or 'piano'
+         * @param {number} duration - Playback duration in seconds (default: 3.0s)
+         */
         function playTone(freq, instrument = 'harmonium', duration = 3.0) {
-            stopActiveAudio(); // Stop any overlapping sound before playing new note
+            stopActiveAudio(); // Cut off previous sound before playing the new note
+            
             const ctx = getAudioContext();
             const now = ctx.currentTime;
 
@@ -168,6 +208,7 @@
             masterGain.connect(ctx.destination);
 
             if (instrument === 'harmonium') {
+                // Dual-reed harmonium synthesis: Sawtooth + Square with slight detune
                 const osc1 = ctx.createOscillator();
                 const osc2 = ctx.createOscillator();
                 
@@ -175,28 +216,31 @@
                 osc2.type = 'square';
 
                 osc1.frequency.setValueAtTime(freq, now);
-                osc2.frequency.setValueAtTime(freq * 1.002, now);
+                osc2.frequency.setValueAtTime(freq * 1.0025, now); // Gentle reed chorus effect
 
                 const filter = ctx.createBiquadFilter();
                 filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(1400, now);
+                filter.frequency.setValueAtTime(1200, now);
 
                 osc1.connect(filter);
                 osc2.connect(filter);
                 filter.connect(masterGain);
 
-                masterGain.gain.setValueAtTime(0, now);
-                masterGain.gain.linearRampToValueAtTime(0.3, now + 0.1);
-                masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                // Smooth envelope: 0.15s attack, sustain, 0.4s fade out at end of duration
+                masterGain.gain.setValueAtTime(0.0001, now);
+                masterGain.gain.linearRampToValueAtTime(0.35, now + 0.15);
+                masterGain.gain.setValueAtTime(0.35, now + duration - 0.4);
+                masterGain.gain.linearRampToValueAtTime(0.0001, now + duration);
 
                 osc1.start(now);
                 osc2.start(now);
-                osc1.stop(now + duration);
-                osc2.stop(now + duration);
+                osc1.stop(now + duration + 0.05);
+                osc2.stop(now + duration + 0.05);
 
                 activeNodes.push(osc1, osc2, masterGain);
 
             } else if (instrument === 'bansuri') {
+                // Pure sine wave with breath curve and subtle vibrato
                 const osc = ctx.createOscillator();
                 const lfo = ctx.createOscillator();
                 const lfoGain = ctx.createGain();
@@ -204,61 +248,80 @@
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(freq, now);
 
+                // Gentle flute vibrato (4.5 Hz)
                 lfo.frequency.setValueAtTime(4.5, now);
                 lfoGain.gain.setValueAtTime(freq * 0.008, now);
 
                 lfo.connect(osc.frequency);
                 osc.connect(masterGain);
 
-                masterGain.gain.setValueAtTime(0, now);
-                masterGain.gain.linearRampToValueAtTime(0.35, now + 0.25);
-                masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                // Soft breathy envelope
+                masterGain.gain.setValueAtTime(0.0001, now);
+                masterGain.gain.linearRampToValueAtTime(0.4, now + 0.25);
+                masterGain.gain.setValueAtTime(0.4, now + duration - 0.4);
+                masterGain.gain.linearRampToValueAtTime(0.0001, now + duration);
 
                 lfo.start(now);
                 osc.start(now);
-                lfo.stop(now + duration);
-                osc.stop(now + duration);
+                lfo.stop(now + duration + 0.05);
+                osc.stop(now + duration + 0.05);
 
                 activeNodes.push(osc, lfo, masterGain);
 
             } else if (instrument === 'piano') {
+                // Resonance piano with full 3.0s exponential decay
                 const osc = ctx.createOscillator();
                 osc.type = 'triangle';
                 osc.frequency.setValueAtTime(freq, now);
 
-                osc.connect(masterGain);
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(2500, now);
 
-                masterGain.gain.setValueAtTime(0.6, now);
-                masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                osc.connect(filter);
+                filter.connect(masterGain);
+
+                // Piano strike attack & natural decay
+                masterGain.gain.setValueAtTime(0.0001, now);
+                masterGain.gain.linearRampToValueAtTime(0.6, now + 0.02);
+                masterGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
                 osc.start(now);
-                osc.stop(now + duration);
+                osc.stop(now + duration + 0.05);
 
                 activeNodes.push(osc, masterGain);
             }
         }
 
+        // Calculate frequency based on semitone offset from base Sa
         function calculateFreq(semitones) {
             const baseFreq = parseFloat(scaleSelect.value);
             return baseFreq * Math.pow(2, semitones / 12);
         }
 
+        // Dynamically renders the Swara Grid
         function renderGrid() {
             swaraGrid.innerHTML = '';
             const activeList = SWARAS.filter(s => currentMode === 'mixed' || s.isShudh);
 
+            if (currentMode === 'shudh') {
+                swaraGrid.className = "grid grid-cols-2 sm:grid-cols-4 gap-2.5";
+            } else {
+                swaraGrid.className = "grid grid-cols-3 sm:grid-cols-4 sm:grid-cols-5 gap-2.5";
+            }
+
             activeList.forEach(swar => {
                 const btn = document.createElement('button');
                 btn.dataset.id = swar.id;
-                btn.className = `swara-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-750 active:scale-95 transition shadow disabled:opacity-50 disabled:cursor-not-allowed`;
+                btn.className = `swara-btn flex flex-col items-center justify-center py-3.5 px-2 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-750 font-bold text-slate-100 shadow-md`;
                 
-                let badgeColor = 'text-amber-400';
-                if (swar.type === 'Komal') badgeColor = 'text-cyan-400';
-                if (swar.type === 'Teevr') badgeColor = 'text-rose-400';
+                let badgeColor = 'text-amber-400 bg-amber-400/10 border-amber-400/20';
+                if (swar.type === 'Komal') badgeColor = 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20';
+                if (swar.type === 'Teevr') badgeColor = 'text-rose-400 bg-rose-400/10 border-rose-400/20';
 
                 btn.innerHTML = `
-                    <span class="text-xl font-bold text-slate-100">${swar.name}</span>
-                    <span class="text-[10px] ${badgeColor} uppercase tracking-wider font-semibold mt-1">${swar.type}</span>
+                    <span class="text-xl sm:text-2xl font-bold">${swar.name}</span>
+                    <span class="text-[9px] ${badgeColor} px-2 py-0.5 rounded-full border uppercase tracking-wider font-semibold mt-1">${swar.type}</span>
                 `;
 
                 btn.addEventListener('click', () => handleGuess(swar));
@@ -270,18 +333,18 @@
 
         function updateModeToggleUI() {
             if (currentMode === 'shudh') {
-                modeShudhLabel.className = "flex items-center justify-center p-2 rounded-md cursor-pointer text-sm font-medium transition-colors bg-amber-500 text-slate-950 font-bold shadow";
-                modeMixedLabel.className = "flex items-center justify-center p-2 rounded-md cursor-pointer text-sm font-medium transition-colors text-slate-400 hover:text-slate-200";
+                modeShudhBtn.className = "py-2.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-md";
+                modeMixedBtn.className = "py-2.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-200";
             } else {
-                modeMixedLabel.className = "flex items-center justify-center p-2 rounded-md cursor-pointer text-sm font-medium transition-colors bg-amber-500 text-slate-950 font-bold shadow";
-                modeShudhLabel.className = "flex items-center justify-center p-2 rounded-md cursor-pointer text-sm font-medium transition-colors text-slate-400 hover:text-slate-200";
+                modeMixedBtn.className = "py-2.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-md";
+                modeShudhBtn.className = "py-2.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-200";
             }
         }
 
         function playBaseSa() {
-            playTone(calculateFreq(0), soundSelect.value);
-            statusMessage.innerText = "Played Base Sa";
-            statusMessage.className = "text-slate-300 text-sm font-medium min-h-[20px]";
+            playTone(calculateFreq(0), soundSelect.value, 3.0);
+            statusMessage.innerText = "Playing Reference Sa (3s)";
+            statusMessage.className = "text-amber-400 text-xs sm:text-sm font-semibold min-h-[24px] flex items-center justify-center";
         }
 
         function playRandomSwara() {
@@ -289,31 +352,34 @@
             const randomIndex = Math.floor(Math.random() * availableSwaras.length);
             activeTarget = availableSwaras[randomIndex];
 
-            playTone(calculateFreq(activeTarget.semitones), soundSelect.value);
+            playTone(calculateFreq(activeTarget.semitones), soundSelect.value, 3.0);
             
             repeatBtn.disabled = false;
-            statusMessage.innerText = "Listen carefully! Identify the Swar...";
-            statusMessage.className = "text-amber-400 text-sm font-medium min-h-[20px] animate-pulse";
+            statusMessage.innerText = "Listening... Which Swar was played?";
+            statusMessage.className = "text-amber-400 text-xs sm:text-sm font-semibold min-h-[24px] flex items-center justify-center animate-pulse";
 
+            // Reset grid button styles
             document.querySelectorAll('.swara-btn').forEach(btn => {
-                btn.className = `swara-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-750 active:scale-95 transition shadow`;
-                btn.disabled = false;
+                btn.className = `swara-btn flex flex-col items-center justify-center py-3.5 px-2 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-750 font-bold text-slate-100 shadow-md`;
             });
         }
 
         function repeatSwara() {
             if (activeTarget) {
-                playTone(calculateFreq(activeTarget.semitones), soundSelect.value);
+                playTone(calculateFreq(activeTarget.semitones), soundSelect.value, 3.0);
+                statusMessage.innerText = "Replaying Target Swar (3s)";
             }
         }
 
         function handleGuess(selectedSwar) {
+            // Play note clicked for ear feedback (stops any playing note)
+            playTone(calculateFreq(selectedSwar.semitones), soundSelect.value, 3.0);
+
             if (!activeTarget) {
-                playTone(calculateFreq(selectedSwar.semitones), soundSelect.value);
+                statusMessage.innerText = `Auditioning ${selectedSwar.name} (${selectedSwar.type})`;
+                statusMessage.className = "text-slate-300 text-xs sm:text-sm font-medium min-h-[24px] flex items-center justify-center";
                 return;
             }
-
-            playTone(calculateFreq(selectedSwar.semitones), soundSelect.value);
 
             totalAttempts++;
             const isCorrect = (selectedSwar.id === activeTarget.id);
@@ -322,47 +388,56 @@
             if (isCorrect) {
                 scoreCount++;
                 streakCount++;
-                statusMessage.innerText = `Correct! It was ${activeTarget.name} (${activeTarget.type})`;
-                statusMessage.className = "text-emerald-400 text-sm font-bold min-h-[20px]";
+                statusMessage.innerText = `🎉 Correct! It was ${activeTarget.name} (${activeTarget.type})`;
+                statusMessage.className = "text-emerald-400 text-xs sm:text-sm font-bold min-h-[24px] flex items-center justify-center";
+                
                 if (clickedBtn) {
-                    clickedBtn.className = "swara-btn flex flex-col items-center justify-center p-4 rounded-xl border border-emerald-500 bg-emerald-950/80 text-white transition shadow";
+                    clickedBtn.className = "swara-btn flex flex-col items-center justify-center py-3.5 px-2 rounded-xl border-2 border-emerald-500 bg-emerald-950/80 font-bold text-white shadow-lg ring-2 ring-emerald-500/50";
                 }
-                activeTarget = null;
+                activeTarget = null; // Reset until next "Play Random Note"
             } else {
                 streakCount = 0;
-                statusMessage.innerText = `Incorrect. You played ${selectedSwar.name}. Try again or press Play Random!`;
-                statusMessage.className = "text-rose-400 text-sm font-bold min-h-[20px]";
+                statusMessage.innerText = `❌ Incorrect. You picked ${selectedSwar.name}. Try again or press Play Random Note!`;
+                statusMessage.className = "text-rose-400 text-xs sm:text-sm font-bold min-h-[24px] flex items-center justify-center";
+                
                 if (clickedBtn) {
-                    clickedBtn.className = "swara-btn flex flex-col items-center justify-center p-4 rounded-xl border border-rose-500 bg-rose-950/80 text-white transition shadow";
+                    clickedBtn.className = "swara-btn flex flex-col items-center justify-center py-3.5 px-2 rounded-xl border-2 border-rose-500 bg-rose-950/80 font-bold text-white shadow-lg ring-2 ring-rose-500/50";
                 }
             }
 
-            scoreVal.innerText = `${scoreCount}/${totalAttempts}`;
-            streakVal.innerText = streakCount;
+            // Update Scoreboard UI
+            scoreVal.innerText = `${scoreCount} / ${totalAttempts}`;
+            const pct = Math.round((scoreCount / totalAttempts) * 100);
+            accuracyVal.innerText = `${pct}%`;
+            streakVal.innerText = `${streakCount} 🔥`;
         }
 
+        // Event Listeners
         playSaBtn.addEventListener('click', playBaseSa);
         playRandomBtn.addEventListener('click', playRandomSwara);
         repeatBtn.addEventListener('click', repeatSwara);
 
-        modeShudhInput.addEventListener('change', () => {
+        modeShudhBtn.addEventListener('click', () => {
+            if (currentMode === 'shudh') return;
             currentMode = 'shudh';
             activeTarget = null;
             repeatBtn.disabled = true;
-            statusMessage.innerText = "Switched to Shudh Notes";
-            statusMessage.className = "text-slate-300 text-sm font-medium min-h-[20px]";
+            statusMessage.innerText = "Mode: Shudh Notes Only";
+            statusMessage.className = "text-slate-300 text-xs sm:text-sm font-medium min-h-[24px] flex items-center justify-center";
             renderGrid();
         });
 
-        modeMixedInput.addEventListener('change', () => {
+        modeMixedBtn.addEventListener('click', () => {
+            if (currentMode === 'mixed') return;
             currentMode = 'mixed';
             activeTarget = null;
             repeatBtn.disabled = true;
-            statusMessage.innerText = "Switched to Mixed Notes";
-            statusMessage.className = "text-slate-300 text-sm font-medium min-h-[20px]";
+            statusMessage.innerText = "Mode: Mixed Notes (13 Swaras)";
+            statusMessage.className = "text-slate-300 text-xs sm:text-sm font-medium min-h-[24px] flex items-center justify-center";
             renderGrid();
         });
 
+        // Initial Load
         renderGrid();
     </script>
 </body>
