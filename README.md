@@ -1,6 +1,8 @@
 # Music-Ear-Trainer
 Ear Trainer -Swar Abhyas
 
+App link - https://prabhwho-cloud.github.io/Music-Ear-Trainer/EarTuner-SwarAbhyas.html
+
 # Ear Trainer Swar Abhyas 
 
 **Swar Abhyas** is a mobile-responsive, web-based ear training application designed for students and practitioners of Indian Classical Music. It helps users develop pitch recognition and ear training across all 12 swaras (Shudh, Komal, and Teevr) starting from any base pitch (Sa).
